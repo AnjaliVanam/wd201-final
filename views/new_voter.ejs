@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../public/css/style.css">
+    <title><%= title %></title>
+</head>
+<style>
+    
+</style>
+<body style="background-color:lavender;">
+    <%- include('header.ejs') %>
+    <div>
+        <span>></span>
+        <a href="/elections" class="text-purple-800 hover:text-purple-600">All Elections</a>
+        <span>></span>
+        <a href="/elections/<%= electionID %>/" class="text-purple-800 hover:text-purple-600">Election</a>
+        <span>></span>
+        <a href="/elections/<%= electionID %>/voters" class="text-purple-800 hover:text-purple-600">Voters</a>
+    </div>
+            <span class="text-4xl  flex justify-center font-light "><%= title %></span>
+            <div>
+                <% if (messages && messages.error && messages.error.length > 0) { %>
+                    <% for(var i=0; i<messages.error.length; i++) { %>
+                        <p class="bg-purple-100 my-3 list-none rounded-md px-4 py-2"><%= messages.error[i] %></p>
+                    <% } %>
+                <% } %>
+            </div>
+            <div>
+            
+                <form action="/elections/<%= electionID %>/voters/create" method="post" class="px-8 py-6">
+                <table class="flex justify-center">
+                    <tr><td>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                    <label for="voterid" class="block mt-3 font-semibold">Voter ID</label>
+                    <input id="voterid" name="voterid" type="voterid" placeholder="Voter ID" class="border w-fit h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
+                </td></tr>
+                <tr><td>
+                    <label for="password" class="block mt-3 font-semibold">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Password" class="border w-fit h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
+                </td></tr>
+                <tr><td>
+                <br><button type="submit" class="mt-6 w-fit bg-purple-500 text-white py-2 px-6 rounded-md hover:bg-purple-600 ">Add voter</button>
+            </td></tr>
+        </form>
+            </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

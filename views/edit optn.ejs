@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Edit option</title>
+    <script>
+        var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+        function updateOption() {
+            let electionID = <%= electionID %>;
+            let questionID = <%= questionID %>;
+            let optionID = <%= optionID %>;
+            let option = document.getElementById("option").value;
+            fetch(`/options/${optionID}/edit`, {
+                method: "put",
+                headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({
+                    "_csrf":token,
+                    "option":option,
+                })
+            }).then((res)=>{
+                if (res.ok) {
+                    window.location.replace(`/elections/${electionID}/questions/${questionID}`);
+                }
+            }).catch((err)=> console.error(err))
+        }
+    </script>
+</head>
+<body style="background-color:lavender;">
+            <span class="text-4xl flex justify-center font-semibold ">Edit question</span>
+            <div>
+                <% if (messages && messages.error && messages.error.length > 0) { %>
+                    <% for(var i=0; i<messages.error.length; i++) { %>
+                        <p class="bg-blue-100 my-3 list-none rounded-md px-4 py-2"><%= messages.error[i] %></p>
+                    <% } %>
+                <% } %>
+            </div>
+                <table class="flex justify-center">
+                <div class="px-8 py-6">
+                <tr><td>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                    <label for="option" class="block mt-3  flex justify-center font-semibold">Option</label>
+                <input value="<%= option %>" id="option" name="option" type="text" placeholder="Option" class="border w-fit h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
+            </td></tr>
+            <tr><td>
+             <br>  <button class="mt-4 w-fitblue-500 text-white py-2 px-6 rounded-md bg-blue-400" onclick="updateOption()">Update option</button>
+                </div>
+            </table>
+            
+    
+    </div>
+</body>
+</html>

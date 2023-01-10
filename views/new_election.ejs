@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../public/css/style.css">
+    <title><%= title %></title>
+</head>
+<body style="background-color: lavender;" >
+    <%- include('header.ejs') %>
+    <div >
+        <span>></span>
+        <a href="/elections" class="text-black-800 hover:text-black-600"> All Elections</a>
+        <span>></span>
+    </div>
+            <div>
+                <% if (messages && messages.error && messages.error.length > 0) { %>
+                    <% for(var i=0; i<messages.error.length; i++) { %>
+                        <p class="bg-blue-100 my-3 list-none rounded-md px-4 py-2"><%= messages.error[i] %></p>
+                    <% } %>
+                <% } %>
+            </div>
+            <div class="mt-4 bg-pink shadow-md  text-left">
+                <span class="text-4xl font-semibold flex justify-center">Create a new election</span>
+                <form action="/elections" method="post" class="px-8 py-6">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <table class="flex justify-center">
+                <tr><td>
+                   <label for="electionName" class="block mt-3 font-semibold">What is your election's name?</label>
+                    <input id="electionName" name="electionName" type="text" placeholder="Name" class="border w-fit h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
+                </td></tr>
+                <tr><td>
+                 <label for="urlString" class="block mt-3 font-semibold">Enter a custom URL string (With no spaces)</label>
+                 <input id="urlString" name="urlString" type="text" placeholder="URL String" class="border w-fit h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
+                </td></tr>
+                <tr><td>
+                <br><button type="submit" class="mt-6 w-fit flex justify-center bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-purple-600 ">Create</button>
+            </td></tr>
+        </div> </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
